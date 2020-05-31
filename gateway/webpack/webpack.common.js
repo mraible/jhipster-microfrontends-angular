@@ -74,8 +74,16 @@ module.exports = (options) => ({
                 SERVER_API_URL: `''`
             }
         }),
-        new CopyWebpackPlugin([
-            { from: './node_modules/swagger-ui-dist/*.{js,css,html,png}', to: 'swagger-ui', flatten: true, ignore: ['index.html'] },
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+              from: './node_modules/swagger-ui-dist/*.{js,css,html,png}',
+              to: 'swagger-ui',
+              globOptions: {
+                flatten: true,
+                ignore: ['index.html'],
+              },
+            },
             { from: './node_modules/axios/dist/axios.min.js', to: 'swagger-ui' },
             { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
             { from: './src/main/webapp/content/', to: 'content' },
@@ -83,7 +91,8 @@ module.exports = (options) => ({
             { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
             // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
             { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
-        ]),
+          ]
+        }),
         new MergeJsonWebpackPlugin({
             output: {
                 groupBy: [
@@ -95,11 +104,11 @@ module.exports = (options) => ({
         }),
         new HtmlWebpackPlugin({
             template: './src/main/webapp/index.html',
-            chunks: ['polyfills', 'main', 'global'],
+            //chunks: ['polyfills', 'main', 'global'],
             chunksSortMode: 'manual',
             inject: 'body'
         }),
-        new BaseHrefWebpackPlugin({ baseHref: '/' }),
+        //new BaseHrefWebpackPlugin({ baseHref: '/' }),
         new AngularCompilerPlugin({
             mainPath: utils.root('src/main/webapp/app/app.main.ts'),
             tsConfigPath: utils.root('tsconfig.app.json'),

@@ -110,9 +110,9 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
             path.resolve(__dirname, './src/main/webapp/')
         ),
         new writeFilePlugin(),
-        new webpack.WatchIgnorePlugin([
-            utils.root('src/test'),
-        ]),
+        new webpack.WatchIgnorePlugin({
+          'paths': [utils.root('src/test')]
+        }),
         new WebpackNotifierPlugin({
             title: 'JHipster',
             contentImage: path.join(__dirname, 'logo-jhipster.png')
